@@ -41,7 +41,6 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
-
 class Order(models.Model):
     """
     Model for ordering product(s) by buyer
@@ -76,8 +75,67 @@ class Order(models.Model):
     def __str__(self):
         return f"Order #{self.id} by {self.buyer.username}"
 
+class Category(models.Model):
+    """
+    name - name/str of category, contains max 100 symbols
+    
+    magic method __str__ - return name of category in admin panel
+    
+    """
+    name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.name
 
+class Review(models.Model):
+    """
+    product - linked with review, if product'll be deleted - all reviews too
+    
+    author - linked with user, who made review
+
+    rating - (e.g in scale 1-5)
+
+    comment - comment by product
+
+    created_at - time when review of product was created
+        *- DateTimeField(auto_now_add=True) - date will be made automatically
+    
+    magic method __str__ - return review in admin panel (name product and author)
+    
+    """
+    product = models.ForeignKey("Product", on_delete=models.CASCADE, related_name="reviews")
+    
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    rating = models.IntegerField()
+
+    comment = models.TextField
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.product.name} - {self.author.username}"
+
+class ShippingInfo(models.Model):
+    """
+    order -
+    *- OneToOneField -
+        one order can include one shipping
+        (one-to-one)
+    
+    address, city, postal_code, country - fields of shipping
+    
+    magic method __str__ - return order and total address in admin panel
+    """
+    order = models.OneToOneField("Order", on_delete=models.CASCADE, related_name="shipping_info")
+
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=20)
+    country = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.order} - {self.address}"
 """
 cmds:
 
