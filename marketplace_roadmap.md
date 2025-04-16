@@ -5,9 +5,9 @@
 **Goal:** Create basic database tables for products and orders
 - [x] Product — product model
 - [x] Order — order model
-- [ ] Category — product categories *(optional)*
-- [ ] Review — product reviews *(optional)*
-- [ ] ShippingInfo — shipping data *(if needed)*
+- [x] Category — product categories *(optional)*
+- [x] Review — product reviews *(optional)*
+- [x] ShippingInfo — shipping data *(if needed)*
 
 **Process:**
 1. Define fields and relationships in `models.py`
@@ -18,11 +18,11 @@
 
 ### 🔄 2. API
 **Goal:** Provide access to models via REST API
-- [ ] Serializers for Product and Order
-- [ ] ViewSets and routes
-- [ ] Access restriction (only the author can edit the product)
-- [ ] Filtering and search (by category, price, etc.)
-- [ ] Pagination
+- [x] Serializers for Product and Order
+- [x] ViewSets and routes
+- [x] Access restriction (only the author can edit the product)
+- [x] Filtering and search (by category, price, etc.)
+- [x] Pagination
 
 **Process:**
 1. Create `serializers.py` and define serializers
