@@ -8,4 +8,8 @@ class IsAuthor(permissions.BasePermission):
         """
         make a permission only if user is author
         """
-        return obj.author == request.user
+        return obj.seller == request.user
+    
+class IsSeller(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and request.user.role == "seller"

@@ -1,6 +1,18 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import get_user_model
 
+class CustomerUser(AbstractUser):
+    """
+    ROLE_CHOICES - variants of roles: buyer, seller (1st in db - 2nd in admin panel)
+    
+    role - field for role (max 10 symbols)
+    """
+    ROLE_CHOICES = (
+        ('buyer', 'Buyer'),
+        ('seller', 'Seller'),
+    )
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default="buyer")
 
 class Product(models.Model):
     """
@@ -28,7 +40,7 @@ class Product(models.Model):
 
     """
 
-    seller = models.ForeignKey(User, on_delete=models.CASCADE)
+    seller = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
     title = models.CharField(max_length=255)
 
@@ -64,7 +76,7 @@ class Order(models.Model):
     magic method __str__ - return str, which contains name of buyer and id of order
     """
 
-    buyer = models.ForeignKey(User, on_delete=models.CASCADE)
+    buyer = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
     products = models.ManyToManyField(Product)
 
@@ -105,11 +117,11 @@ class Review(models.Model):
     """
     product = models.ForeignKey("Product", on_delete=models.CASCADE, related_name="reviews")
     
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
     rating = models.IntegerField()
 
-    comment = models.TextField
+    comment = models.TextField()
 
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -136,6 +148,7 @@ class ShippingInfo(models.Model):
 
     def __str__(self):
         return f"{self.order} - {self.address}"
+
 """
 cmds:
 

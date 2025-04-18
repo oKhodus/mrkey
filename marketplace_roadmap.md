@@ -21,7 +21,7 @@
 - [x] Serializers for Product and Order
 - [x] ViewSets and routes
 - [x] Access restriction (only the author can edit the product)
-- [x] Filtering and search (by category, price, etc.)
+- [x/-] Filtering and search (by category, price, etc.)
 - [x] Pagination
 
 **Process:**
